@@ -9,7 +9,7 @@ import torchvision
 import torchvision.transforms as transforms
 from typing import Tuple, Dict, List
 
-import get_model from model
+from model import get_model 
 
 
 
