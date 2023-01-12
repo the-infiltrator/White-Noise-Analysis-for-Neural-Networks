@@ -1,4 +1,4 @@
-mport os
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -9,7 +9,6 @@ import torchvision
 import torchvision.transforms as transforms
 from typing import Tuple, Dict, List
 
-from model import get_model 
 
 def get_data_loader(dataset, batch_size, shuffle=True, num_workers=4, pin_memory=False): 
   
