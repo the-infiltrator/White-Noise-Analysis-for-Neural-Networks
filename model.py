@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import torchvision
 import torchvision.transforms as transforms
 from typing import Tuple, Dict, List
-from utils import get_data_loader
 
 
 
