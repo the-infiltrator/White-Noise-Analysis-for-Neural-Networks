@@ -2,7 +2,7 @@ White Noise Analysis of Neural Networks
 =======================================
 
 
-![](https://github.com/the-infiltrator/White-Noise-Analysis-for-Neural-Networks/blob/master/fmnist_noisepreds2.png?raw=true)
+![](https://github.com/the-infiltrator/White-Noise-Analysis-for-Neural-Networks/blob/master/fmnist_noisepreds.png?raw=true)
 
 Average noise maps for varying levels of gamma and their corresponding predicted values for a  CNN trained on the `fmnist` dataset. 
 
