@@ -7,7 +7,7 @@ import torchvision
 import torchvision.transforms as transforms
 from typing import Tuple, Dict, List
 
-
+from utils import get_data_loader
 
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
