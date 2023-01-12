@@ -13,6 +13,12 @@ def calculate_noise_maps(model, class_names, noise_samples, sample_images, gamma
     Returns:
         A tuple containing the classification images and average noise maps.
     """
+
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
+
     num_classes = len(class_names)
     # Calculate the linear combination of the sample images and the white noise
     # classification_images = (gamma * sample_images[:,0,:,:,:]) + ((1 - gamma) * noise_samples[:num_classes].cpu().numpy())
@@ -54,6 +60,11 @@ def visualise_classification_images(model, class_names, test_set, gamma_values):
         sample_images: A list of sample images for each class.
         gamma_values: A list of gamma values to generate classification images for.
     """
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
+      
     num_classes = len(class_names)
     sample_images, labels = generate_samples(num_classes ,test_set)
     num_gamma_values = len(gamma_values)
@@ -93,6 +104,11 @@ def visualise_average_noisemaps(model, class_names, test_set, gamma_values, titl
         gamma_values: A list of gamma values to generate average noise maps for.
         title: The title of the plot
     """
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
+
     num_classes = len(class_names)
     sample_images, labels = generate_samples(num_classes ,test_set)
     num_gamma_values = len(gamma_values)

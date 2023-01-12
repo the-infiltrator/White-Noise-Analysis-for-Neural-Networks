@@ -1,4 +1,4 @@
-import os
+mport os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -11,9 +11,13 @@ from typing import Tuple, Dict, List
 
 from model import get_model 
 
-
-
-def get_data_loader(dataset, batch_size, shuffle=True, num_workers=4, pin_memory=False):
+def get_data_loader(dataset, batch_size, shuffle=True, num_workers=4, pin_memory=False): 
+  
+  if torch.cuda.is_available():
+    device = torch.device('cuda')
+  else:
+    device = torch.device('cpu')
+  
   if dataset == 'fashion-mnist':
     transform = transforms.Compose([
       transforms.ToTensor(),
@@ -69,6 +73,12 @@ def save_models(models: Tuple[nn.Module, nn.Module, nn.Module, nn.Module], direc
 
 
 def load_models(directory):
+  # Load the trained models
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
+      
     simple_mnist_model = get_model('simple',(1, 28, 28), 10)
     complex_mnist_model= get_model('complex',(1, 28, 28), 10)
     simple_fmnist_model = get_model('simple',(1, 28, 28), 10)
@@ -81,6 +91,10 @@ def load_models(directory):
 
 
 def visualise_preds(model, data_loader, class_names):
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
     # Set the model to evaluation mode
     model.eval()
     # Create a blank image for each class

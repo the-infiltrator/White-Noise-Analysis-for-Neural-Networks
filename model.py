@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import torchvision
 import torchvision.transforms as transforms
 from typing import Tuple, Dict, List
+from utils import get_data_loader
 
 
 
@@ -59,7 +60,12 @@ def train(model, train_loader, valid_loader, num_epochs=100, early_stopping_pati
   Returns:
     The trained model (a PyTorch nn.Module).
   """
-  
+    # Load the trained models
+  if torch.cuda.is_available():
+    device = torch.device('cuda')
+  else:
+    device = torch.device('cpu')
+
   # Define the Adam optimizer
   optimizer = optim.Adam(model.parameters(), lr=lr_max, weight_decay=weight_decay)
 
