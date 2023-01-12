@@ -42,6 +42,44 @@ def get_model(model_type, input_shape, num_classes):
     raise ValueError('Invalid model type')
   return model
 
+def save_models(models: Tuple[nn.Module, nn.Module, nn.Module, nn.Module], directory: str) -> None:
+    """Saves the given CNN models to the specified directory.
+
+    Args:
+      models: A tuple of the 4 trained CNN models (simple MNIST, complex MNIST, simple Fashion-MNIST, complex Fashion-MNIST).
+      directory: The directory to save the models to.
+
+    Returns:
+      None. The models are saved to disk.
+    """
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    simple_mnist_model, complex_mnist_model, simple_fmnist_model, complex_fmnist_model = models
+
+    torch.save(simple_mnist_model.state_dict(), os.path.join(directory, "simple_mnist_model.pt"))
+    torch.save(complex_mnist_model.state_dict(), os.path.join(directory, "complex_mnist_model.pt"))
+    torch.save(simple_fmnist_model.state_dict(), os.path.join(directory, "simple_fmnist_model.pt"))
+    torch.save(complex_fmnist_model.state_dict(), os.path.join(directory, "complex_fmnist_model.pt"))
+
+
+def load_models(directory):
+  # Load the trained models
+    if torch.cuda.is_available():
+      device = torch.device('cuda')
+    else:
+      device = torch.device('cpu')
+      
+    simple_mnist_model = get_model('simple',(1, 28, 28), 10)
+    complex_mnist_model= get_model('complex',(1, 28, 28), 10)
+    simple_fmnist_model = get_model('simple',(1, 28, 28), 10)
+    complex_fmnist_model= get_model('complex',(1, 28, 28), 10)
+    simple_mnist_model.load_state_dict(torch.load(f'{directory}/simple_mnist_model.pt', map_location=device))
+    complex_mnist_model.load_state_dict(torch.load(f'{directory}/complex_mnist_model.pt', map_location=device))
+    simple_fmnist_model.load_state_dict(torch.load(f'{directory}/simple_fmnist_model.pt', map_location=device))
+    complex_fmnist_model.load_state_dict(torch.load(f'{directory}/complex_fmnist_model.pt', map_location=device))
+    return simple_mnist_model, complex_mnist_model, simple_fmnist_model, complex_fmnist_model
+
 
 def train(model, train_loader, valid_loader, num_epochs=100, early_stopping_patience=5, lr_min=1e-4, lr_max=1e-2, weight_decay=1e-4):
   """Trains a PyTorch model with cosine annealing learning rate scheduling and early stopping.
